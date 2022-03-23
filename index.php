@@ -24,10 +24,10 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="https://source.unsplash.com/1800x600/?apple,code" class="d-block w-100" alt="...">
+      <img src="img/slider1.jpg" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="https://source.unsplash.com/1800x600/?programmers,microsoft" class="d-block w-100" alt="...">
+      <img src="img/slideer2.jpg" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
       <img src="https://source.unsplash.com/1800x600/?coding,python" class="d-block w-100" alt="...">
