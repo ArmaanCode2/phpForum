@@ -15,13 +15,20 @@
 <body>
     <?php include 'partials/_header.php';?>
     <?php include 'partials/_dbconnect.php';?>
+    <?php
+    $id = $_GET['catid']; 
+    $sql = "SELECT * FROM `categories` WHERE category_id=$id"; 
+    $result = mysqli_query($conn, $sql);
+    while($row = mysqli_fetch_assoc($result)){
+      $catname = $row['category_name']; 
+      $catdesc = $row['category_description']; 
+    };
+    ?>
 
     <div class="container my-4">
         <div class="jumbotron">
-            <h1 class="display-4">Welcome to python forums</h1>
-            <p class="lead">Python is a high-level, general-purpose programming language. Its design philosophy
-                emphasizes code readability with the use of significant indentation. Its language constructs and
-                object-oriented approach aim to help programmers write clear, logical code</p>
+            <h1 class="display-4">Welcome to <?php echo $catname; ?> forums</h1>
+            <p class="lead"><?php echo $catdesc; ?></p>
             <hr class="my-4">
             <p>This peer to peer forum.
             No Spam / Advertising / Self-promote in the forums.
