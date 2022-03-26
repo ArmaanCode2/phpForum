@@ -30,6 +30,27 @@
     };
     ?>
 
+    <?php
+        $showAlert = false;
+        $method = $_SERVER['REQUEST_METHOD'];
+        if($method == 'POST'){
+            //Insert into thread into db
+            $th_title = $_POST['title'];
+            $th_desc = $_POST['desc'];
+            $sql = "INSERT INTO `threads` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) VALUES ('$th_title', '$th_desc', '$id', '0', current_timestamp())";
+            $result = mysqli_query($conn,$sql);
+            $showAlert = true;
+            if($showAlert){
+                echo'<div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> Your Thread has been added! Please wait for Community to respond
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
+            }
+        }
+    ?>
+
     <div class="container my-4">
         <div class="jumbotron">
             <h1 class="display-4">Welcome to <?php echo $catname; ?> forums</h1>
@@ -48,10 +69,10 @@
 
     <div class="container">
         <h1 class="py-2">Start a discussion</h1>
-        <form action="">
+        <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
             <div class="form-group">
                 <label for="">Problem Title</label>
-                <input type="email" class="form-control" id="title" name="title" aria-describedy="emailHelp">
+                <input type="text" class="form-control" id="title" name="title" aria-describedy="emailHelp">
                 <small id="emailHelp" class="form-text text-muted">Keep your title as short and crisp as
                     possible</small>
             </div>
@@ -95,17 +116,6 @@ if($noResult){
           </div>';
 }
 ?>
-
-
-        <!-- <div class="media my-3">
-    <img src="img/user-default.webp" width="54px" alt="" class="mr-3">
-    <div class="media-body">
-        <h5 class="mt-0">unable to install pyaudio in windows</h5>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero nam porro magni? Hic optio possimus
-                quis illum ipsa culpa voluptatum doloribus? Consequatur aliquam delectus doloremque odio dicta, velit
-                rerum consequuntur?
-            </div>
-        </div> -->
     </div>
 
     <?php include 'partials/_footer.php';?>
