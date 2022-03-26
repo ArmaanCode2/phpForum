@@ -21,19 +21,19 @@
     <?php include 'partials/_header.php';?>
     <?php include 'partials/_dbconnect.php';?>
     <?php
-    $id = $_GET['catid']; 
-    $sql = "SELECT * FROM `categories` WHERE category_id=$id"; 
+    $id = $_GET['threadid']; 
+    $sql = "SELECT * FROM `threads` WHERE thread_id=$id"; 
     $result = mysqli_query($conn, $sql);
     while($row = mysqli_fetch_assoc($result)){
-      $catname = $row['category_name']; 
-      $catdesc = $row['category_description']; 
+      $title = $row['thread_title']; 
+      $desc = $row['thread_desc']; 
     };
     ?>
 
     <div class="container my-4">
         <div class="jumbotron">
-            <h1 class="display-4">Welcome to <?php echo $catname; ?> forums</h1>
-            <p class="lead"><?php echo $catdesc; ?></p>
+            <h1 class="display-4"><?php echo $title; ?> forums</h1>
+            <p class="lead"><?php echo $desc; ?></p>
             <hr class="my-4">
             <p>This peer to peer forum.
                 No Spam / Advertising / Self-promote in the forums.
@@ -42,13 +42,13 @@
                 Do not cross post questions.
                 Remain respectful of other members at all times.
             </p>
-            <a href="#" class="btn btn-success btn-lg" role="button">Learn more</a>
+            <p><b>Posted by Armaan</b></p>
         </div>
     </div>
 
     <div class="container" id="ques">
-        <h1 class="py-2">Browse Questions</h1>
-        <?php
+        <h1 class="py-2">discussions</h1>
+        <!-- <?php
             $id = $_GET['catid']; 
             $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id"; 
             $result = mysqli_query($conn, $sql);
@@ -61,24 +61,14 @@
         echo '<div class="media my-3">
             <img src="img/user-default.webp" width="54px" alt="" class="mr-3">
             <div class="media-body">
-                <h5 class="mt-0"> <a class="text-dark" href="thread.php?threadid=' . $id . '">' . $title .  ' </a></h5>
+                <h5 class="mt-0"> <a class="text-dark" href="thread.php">' . $title .  ' </a></h5>
                 ' . $desc .  '
             </div>
         </div>';
 
 }
-?>
+?> -->
 
-
-<!-- <div class="media my-3">
-    <img src="img/user-default.webp" width="54px" alt="" class="mr-3">
-    <div class="media-body">
-        <h5 class="mt-0">unable to install pyaudio in windows</h5>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero nam porro magni? Hic optio possimus
-                quis illum ipsa culpa voluptatum doloribus? Consequatur aliquam delectus doloremque odio dicta, velit
-                rerum consequuntur?
-            </div>
-        </div> -->
 </div>
         
         <?php include 'partials/_footer.php';?>
