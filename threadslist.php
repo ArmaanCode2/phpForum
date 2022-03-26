@@ -9,11 +9,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <style>
-        #ques{
-            min-height:433px;
-          }
-        </style>
+    <style>
+    #ques {
+        min-height: 433px;
+    }
+    </style>
     <title>Welcome to iDiscuss - Coding Forums</title>
 </head>
 
@@ -46,13 +46,32 @@
         </div>
     </div>
 
+    <div class="container">
+        <h1 class="py-2">Start a discussion</h1>
+        <form action="">
+            <div class="form-group">
+                <label for="">Problem Title</label>
+                <input type="email" class="form-control" id="title" name="title" aria-describedy="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">Keep your title as short and crisp as
+                    possible</small>
+            </div>
+            <div class="form-group">
+                <label for="">Elaborate Your Problem</label>
+                <textarea id="desc" name="desc" rows="3" class="form-control">Elaborate Your Concern</textarea>
+            </div>
+            <button class="btn btn-success">Submit</button>
+        </form>
+    </div>
+
     <div class="container" id="ques">
         <h1 class="py-2">Browse Questions</h1>
         <?php
             $id = $_GET['catid']; 
             $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id"; 
             $result = mysqli_query($conn, $sql);
+            $noResult = true;
             while($row = mysqli_fetch_assoc($result)){
+            $noResult = false;
             $id = $row['thread_id'];
             $title = $row['thread_title']; 
             $desc = $row['thread_desc']; 
@@ -67,10 +86,18 @@
         </div>';
 
 }
+if($noResult){
+    echo '<div class="jumbotron jumbotron-fluid"> 
+            <div class="container">
+                <p class="display-4">No Threads Found</p>
+                <p class="lead">be the first person to ask a question</p>
+            </div>
+          </div>';
+}
 ?>
 
 
-<!-- <div class="media my-3">
+        <!-- <div class="media my-3">
     <img src="img/user-default.webp" width="54px" alt="" class="mr-3">
     <div class="media-body">
         <h5 class="mt-0">unable to install pyaudio in windows</h5>
@@ -79,12 +106,12 @@
                 rerum consequuntur?
             </div>
         </div> -->
-</div>
-        
-        <?php include 'partials/_footer.php';?>
-        
-        
-        
+    </div>
+
+    <?php include 'partials/_footer.php';?>
+
+
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">

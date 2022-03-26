@@ -52,7 +52,9 @@
             $id = $_GET['catid']; 
             $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id"; 
             $result = mysqli_query($conn, $sql);
+            $noResult = true;
             while($row = mysqli_fetch_assoc($result)){
+            $noResult = false;
             $id = $row['thread_id'];
             $title = $row['thread_title']; 
             $desc = $row['thread_desc']; 
@@ -66,6 +68,15 @@
             </div>
         </div>';
 
+}
+
+if($noResult){
+    echo '<div class="jumbotron jumbotron-fluid"> 
+            <div class="container">
+                <p class="display-4">No Threads Found</p>
+                <p class="lead">be the first person to ask a question</p>
+            </div>
+          </div>';
 }
 ?> -->
 
