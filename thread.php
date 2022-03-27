@@ -9,11 +9,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <style>
-        #ques{
-            min-height:433px;
-          }
-        </style>
+    <style>
+    #ques {
+        min-height: 433px;
+    }
+    </style>
     <title>Welcome to iDiscuss - Coding Forums</title>
 </head>
 
@@ -29,6 +29,26 @@
       $desc = $row['thread_desc']; 
     };
     ?>
+    <?php
+        $showAlert = false;
+        $method = $_SERVER['REQUEST_METHOD'];
+        if($method == 'POST'){
+            //Insert into comment db
+            $comment = $_POST['comment'];
+            
+            $sql = "INSERT INTO `comments`( `comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment','$id','0', current_timestamp())";
+            $result = mysqli_query($conn,$sql);
+            $showAlert = true;
+            if($showAlert){
+                echo'<div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> Your Comment has been added!
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
+            }
+        }
+?>
 
     <div class="container my-4">
         <div class="jumbotron">
@@ -68,11 +88,13 @@
             $noResult = false;
             $id = $row['comment_id'];
             $content = $row['comment_content'];
+            $comment_time = $row['comment_time'];
 
 
-        echo '<div class="media my-3">
+    echo '<div class="media my-3">
             <img src="img/user-default.webp" width="54px" alt="" class="mr-3">
             <div class="media-body">
+                <p class="font-weight-bold my-0">Armaan at ' . $comment_time . '</p>
                 ' . $content .  '
             </div>
         </div>';
@@ -89,12 +111,12 @@ if($noResult){
 }
 ?>
 
-</div>
-        
-        <?php include 'partials/_footer.php';?>
-        
-        
-        
+    </div>
+
+    <?php include 'partials/_footer.php';?>
+
+
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
