@@ -62,7 +62,7 @@
                 Do not cross post questions.
                 Remain respectful of other members at all times.
             </p>
-            <p><b>Posted by Armaan</b></p>
+            <p>Posted by <b>Armaan</b></p>
         </div>
     </div>
 
