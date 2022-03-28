@@ -1,4 +1,5 @@
 <?php
+session_start();
     echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="/Forum">iDiscuss</a>
@@ -28,14 +29,27 @@
             <a href="contact.php" class="nav-link">Contact</a>
           </li>
         </ul>
-        <div class="mx-2 row">
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-success ml-2" type="submit">Search</button>
-          </form>
-          <button class="btn btn-outline-success ml-2" data-toggle="modal" data-target="#loginModal">Login</button>
-          <button class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#signupModal">Signup</button>
-        </div>
+        <div class="mx-2 row">';
+        if(isset($_SESSION['loggedin'])  && $_SESSION['loggedin'] == true){
+          echo '<form class="d-flex">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+          Welcome ' . $_SESSION['useremail'] . ' 
+          <button class="btn btn-outline-success ml-2" data-toggle="modal" data-target="#loginModal">Logout</button>
+        </form>';
+        }else{
+          echo '
+            <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <button class="btn btn-outline-success ml-2" data-toggle="modal" data-target="#loginModal">Login</button>
+            <button class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#signupModal">Signup</button>
+            ';
+        }
+        echo'</div>
+
+
       </div>
     </div>
   </nav>';
