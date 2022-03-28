@@ -34,8 +34,7 @@ session_start();
           echo '<form class="d-flex">
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-          Welcome ' . $_SESSION['useremail'] . ' 
-          <button class="btn btn-outline-success ml-2" data-toggle="modal" data-target="#loginModal">Logout</button>
+          <a href="partials/_logout.php" class="btn btn-outline-success ml-2">Logout</a>
         </form>';
         }else{
           echo '
@@ -56,15 +55,35 @@ session_start();
 
   include 'partials/_loginModal.php';
   include 'partials/_signupModal.php';
+  //for signup
   if(isset($_GET['signupsuccess']) && $_GET['signupsuccess'] == "true"){
     echo '<div style="position:absolute; top: 50px;z-index:2;width:100%;" class="alert alert-success alert-dismissible fade show my-0" role="alert">
-              <strong>Success!</strong> You can now Login
+              <strong>Success!</strong> Your account is Created
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>';
   }
   if(isset($_GET['signuperror']) && $_GET['signuperror'] == "false"){
+    echo '<div style="position:absolute; top: 50px;z-index:2;width:100%;" class="alert alert-danger alert-dismissible fade show my-0" role="alert">
+              <strong>Failed!</strong> ' .  $_GET['error'] . '
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>';
+  }
+
+  //for login 
+
+  if(isset($_GET['login']) && $_GET['login'] == "true"){
+    echo '<div style="position:absolute; top: 50px;z-index:2;width:100%;" class="alert alert-success alert-dismissible fade show my-0" role="alert">
+              <strong>Success!</strong> You are successfuly Logged in
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>';
+  }
+  if(isset($_GET['login']) && $_GET['login'] == "false"){
     echo '<div style="position:absolute; top: 50px;z-index:2;width:100%;" class="alert alert-danger alert-dismissible fade show my-0" role="alert">
               <strong>Failed!</strong> ' .  $_GET['error'] . '
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">

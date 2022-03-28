@@ -15,15 +15,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $_SESSION['loggedin'] = true;
             $_SESSION['useremail'] = $email;
             // echo "logged in  " . $email;
-            header("Location: /Forum/index.php");
+            header("Location: /Forum/index.php?login=true");
             exit();
         }else{
+            $showError = "Wrong Password for Email";
             // echo 'Wrong Password for Email';
-            header("Location: /Forum/index.php");
+            header("Location: /Forum/index.php?login=false&error=$showError");
         }
     }else{
+        $showError = "Email does not exists Please try another Email";
         // echo 'Email does not exists';
-        header("Location: /Forum/index.php");
+        header("Location: /Forum/index.php?login=false&error=$showError");
     }
 }
 
