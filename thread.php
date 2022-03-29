@@ -27,6 +27,12 @@
     while($row = mysqli_fetch_assoc($result)){
       $title = $row['thread_title']; 
       $desc = $row['thread_desc']; 
+      $thread_user_id = $row['thread_user_id'];
+
+      $sql2 = "SELECT user_email FROM `users` WHERE sno='$thread_user_id'";
+      $result2 = mysqli_query($conn, $sql2);
+      $row2 = mysqli_fetch_assoc($result2); 
+      $posted_by = $row2['user_email']; 
     };
     ?>
     <?php
@@ -35,6 +41,8 @@
         if($method == 'POST'){
             //Insert into comment db
             $comment = $_POST['comment'];
+            $comment = str_replace("<", "&lt;", $comment);
+            $comment = str_replace(">", "&gt;", $comment);
             $sno = $_POST['sno'];
             
             $sql = "INSERT INTO `comments`( `comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment','$id','$sno', current_timestamp())";
@@ -63,7 +71,7 @@
                 Do not cross post questions.
                 Remain respectful of other members at all times.
             </p>
-            <p>Posted by <b>Armaan</b></p>
+            <p>Posted by <b><em><?php echo $posted_by; ?></em></b></p>
         </div>
     </div>
 
