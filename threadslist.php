@@ -67,23 +67,33 @@
         </div>
     </div>
 
-    <div class="container">
-        <h1 class="py-2">Start a discussion</h1>
-        <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
-            <div class="form-group">
-                <label for="">Problem Title</label>
-                <input type="text" class="form-control" id="title" name="title" aria-describedy="emailHelp">
-                <small id="emailHelp" class="form-text text-muted">Keep your title as short and crisp as
-                    possible</small>
-            </div>
-            <div class="form-group">
-                <label for="">Elaborate Your Problem</label>
-                <textarea id="desc" name="desc" rows="3" class="form-control">Elaborate Your Concern</textarea>
-            </div>
-            <button class="btn btn-success">Submit</button>
-        </form>
-    </div>
-
+    <?php
+    if(isset($_SESSION['loggedin'])  && $_SESSION['loggedin'] == true){
+    echo '
+        <div class="container">
+            <h1 class="py-2">Start a discussion</h1>
+            <form action="' . $_SERVER["REQUEST_URI"] . '" method="post">
+                <div class="form-group">
+                    <label for="">Problem Title</label>
+                    <input type="text" class="form-control" id="title" name="title" aria-describedy="emailHelp">
+                    <small id="emailHelp" class="form-text text-muted">Keep your title as short and crisp as
+                        possible</small>
+                </div>
+                <div class="form-group">
+                    <label for="">Elaborate Your Problem</label>
+                    <textarea id="desc" name="desc" rows="3" class="form-control">Elaborate Your Concern</textarea>
+                </div>
+                <button class="btn btn-success">Submit</button>
+            </form>
+        </div>';
+    }else{
+        // echo ' your not logged in';
+        echo '  <div class="container">
+                    <h1 class="py-2">Start a discussion</h1>
+                    <p class="lead">You are not logged in</p>
+                </div> ';
+    }
+    ?>
     <div class="container" id="ques">
         <h1 class="py-2">Browse Questions</h1>
         <?php

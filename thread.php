@@ -66,16 +66,27 @@
         </div>
     </div>
 
+    <?php
+    if(isset($_SESSION['loggedin'])  && $_SESSION['loggedin'] == true){
+    echo '
     <div class="container">
-        <h1 class="py-2">Post a Comment</h1>
-        <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
-            <div class="form-group">
-                <label for="">Type your Comment</label>
-                <textarea id="comment" name="comment" rows="3" class="form-control">Elaborate Your Concern</textarea>
-            </div>
-            <button class="btn btn-success">Post Comment </button>
-        </form>
-    </div>
+    <h1 class="py-2">Post a Comment</h1>
+    <form action="' . $_SERVER["REQUEST_URI"]  . '" method="post">
+        <div class="form-group">
+            <label for="">Type your Comment</label>
+            <textarea id="comment" name="comment" rows="3" class="form-control">Elaborate Your Concern</textarea>
+        </div>
+        <button class="btn btn-success">Post Comment </button>
+    </form>
+</div>';
+    }else{
+        // echo ' your not logged in';
+        echo '  <div class="container">
+                    <h1 class="py-2">Post a Comment</h1>
+                    <p class="lead">You are not logged in</p>
+                </div> ';
+    }
+    ?>
 
     <div class="container" id="ques">
         <h1 class="py-2">Discussions</h1>
