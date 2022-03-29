@@ -35,8 +35,9 @@
         if($method == 'POST'){
             //Insert into comment db
             $comment = $_POST['comment'];
+            $sno = $_POST['sno'];
             
-            $sql = "INSERT INTO `comments`( `comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment','$id','0', current_timestamp())";
+            $sql = "INSERT INTO `comments`( `comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment','$id','$sno', current_timestamp())";
             $result = mysqli_query($conn,$sql);
             $showAlert = true;
             if($showAlert){
@@ -66,6 +67,7 @@
         </div>
     </div>
 
+    
     <?php
     if(isset($_SESSION['loggedin'])  && $_SESSION['loggedin'] == true){
     echo '
@@ -74,7 +76,8 @@
     <form action="' . $_SERVER["REQUEST_URI"]  . '" method="post">
         <div class="form-group">
             <label for="">Type your Comment</label>
-            <textarea id="comment" name="comment" rows="3" class="form-control">Elaborate Your Concern</textarea>
+            <textarea placeholder="Elaborate Your Concern" id="comment" name="comment" rows="3" class="form-control"></textarea>
+            <input type="hidden" name="sno" value="' . $_SESSION["sno"] . '">
         </div>
         <button class="btn btn-success">Post Comment </button>
     </form>
@@ -99,13 +102,17 @@
             $noResult = false;
             $id = $row['comment_id'];
             $content = $row['comment_content'];
-            $comment_time = $row['comment_time'];
+            $comment_time = date("F j, Y");
+            $thread_user_id = $row['comment_by'];
+            $sql2 = "SELECT user_email FROM `users` WHERE sno='$thread_user_id'";
+            $result2 = mysqli_query($conn, $sql2);
+            $row2 = mysqli_fetch_assoc($result2);
 
 
     echo '<div class="media my-3">
             <img src="img/user-default.webp" width="54px" alt="" class="mr-3">
             <div class="media-body">
-                <p class="font-weight-bold my-0">Armaan at ' . $comment_time . '</p>
+                <p class="font-weight-bold my-0">' . $row2['user_email'] . ' at ' . $comment_time . '</p>
                 ' . $content .  '
             </div>
         </div>';

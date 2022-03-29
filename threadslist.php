@@ -37,7 +37,8 @@
             //Insert into thread into db
             $th_title = $_POST['title'];
             $th_desc = $_POST['desc'];
-            $sql = "INSERT INTO `threads` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) VALUES ('$th_title', '$th_desc', '$id', '0', current_timestamp())";
+            $sno = $_POST['sno'];
+            $sql = "INSERT INTO `threads` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) VALUES ('$th_title', '$th_desc', '$id', '$sno', current_timestamp())";
             $result = mysqli_query($conn,$sql);
             $showAlert = true;
             if($showAlert){
@@ -79,9 +80,10 @@
                     <small id="emailHelp" class="form-text text-muted">Keep your title as short and crisp as
                         possible</small>
                 </div>
+                <input type="hidden" name="sno" value="' . $_SESSION["sno"] . '">
                 <div class="form-group">
                     <label for="">Elaborate Your Problem</label>
-                    <textarea id="desc" name="desc" rows="3" class="form-control">Elaborate Your Concern</textarea>
+                    <textarea placeholder="Elaborate Your Concern" id="desc" name="desc" rows="3" class="form-control"></textarea>
                 </div>
                 <button class="btn btn-success">Submit</button>
             </form>
@@ -102,21 +104,22 @@
             $result = mysqli_query($conn, $sql);
             $noResult = true;
             while($row = mysqli_fetch_assoc($result)){
-            $noResult = false;
-            $id = $row['thread_id'];
-            $title = $row['thread_title']; 
-            $desc = $row['thread_desc']; 
-            $thread_time = $row['timestamp']; 
+                $noResult = false;
+                $id = $row['thread_id'];
+                $title = $row['thread_title']; 
+                $desc = $row['thread_desc']; 
+                $thread_time = date("F j, Y");
+                $thread_user_id = $row['thread_user_id'];
+                $sql2 = "SELECT user_email FROM `users` WHERE sno='$thread_user_id'";
+                $result2 = mysqli_query($conn, $sql2);
+                $row2 = mysqli_fetch_assoc($result2);
 
-
-        echo '<div class="media my-3">
-            <img src="img/user-default.webp" width="54px" alt="" class="mr-3">
-            <div class="media-body">
-            <p class="font-weight-bold my-0">Armaan at ' . $thread_time . '</p>
-                <h5 class="mt-0"> <a class="text-dark" href="thread.php?threadid=' . $id . '">' . $title .  ' </a></h5>
-                ' . $desc .  '
-            </div>
-        </div>';
+                echo '<div class="media my-3">
+                    <img src="img/user-default.webp" width="54px" alt="" class="mr-3">
+                    <div class="media-body">' . 
+                        '<h5 class="mt-0"> <a class="text-dark" href="thread.php?threadid=' . $id . '">' . $title .  ' </a></h5>
+                        ' . $desc .  '</div>' . '<p class="font-weight-bold my-0"> '. $row2['user_email'] . ' at ' . $thread_time . '</p>' . '
+                </div>';
 
 }
 if($noResult){
