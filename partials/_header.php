@@ -1,3 +1,5 @@
+<?php include '_dbconnect.php';?>
+
 <?php
 session_start();
     echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -15,15 +17,17 @@ session_start();
             <a class="nav-link" href="about.php">About</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false">
-              Categories 
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-haspopup="true" data-toggle="dropdown" aria-expanded="false">
+             Top Categories 
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">';
+
+              $sql = "SELECT category_name, category_id FROM `categories` LIMIT 4";
+              $result = mysqli_query($conn,$sql);
+              while($row = mysqli_fetch_assoc($result)){
+                echo '<a class="dropdown-item" href="threadslist.php?catid=' . $row['category_id'] . '">' . $row['category_name'] . '</a>';
+              }
+            echo '</div>
           </li>
           <li class="nav-item">
             <a href="contact.php" class="nav-link">Contact</a>
