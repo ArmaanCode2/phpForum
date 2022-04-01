@@ -9,14 +9,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <style>
-          #ques{
-            min-height:433px;
-        }
-        .container{
-            min-height:80.4vh;
-          }
-        </style>
+    <style>
+    #mainContainer {
+        min-height: 80.4vh;
+    }
+    </style>
     <title>Welcome to iDiscuss - Coding Forums</title>
 </head>
 
@@ -25,17 +22,46 @@
     <?php include 'partials/_dbconnect.php';?>
 
 
-        <!-- Search Results -->
-        <div class="container my-3 text-center">
-            <h1 class="py-2">Search Results for <em>"<?php  echo $_GET['search'];  ?>"</em></h1>
-            
-            <div class="result">
-              <h3><a href="/category/sad" class="text-dark">Cannot </a></h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas nisi minus quos, error cumque dicta nihil laudantium distinctio odit natus tempore accusantium sapiente iusto soluta architecto quidem earum nobis magni iure facere suscipit adipisci, non commodi. Corporis temporibus incidunt omnis iste totam tempore dicta nisi ea nemo inventore consequatur dolores voluptas doloremque earum quam, exercitationem ex sed explicabo voluptate? Nulla ab omnis repellendus, maiores reprehenderit non provident asperiores quam porro, libero quasi necessitatibus delectus placeat voluptate exercitationem! Error, debitis sed!
-              </p>
-          </div>
 
-        </div>
+    <!-- Search Results -->
+    <div id="mainContainer" class="container my-3 text-center">
+        
+               <h1 class="py-2">Search Results for <em>"<?php echo $_GET["search"]?>"</em></h1>
+        
+    <?php
+        $noresults = true;
+        
+        $query = $_GET['search'];
+        $sql = "SELECT * FROM `threads` WHERE MATCH (thread_title, thread_desc) against ('$query')"; 
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)){
+        $noresults = false;
+        $title = $row['thread_title']; 
+        $desc = $row['thread_desc'];
+        $thread_id = $row['thread_id'];
+        $url = "thread.php?threadid=" . $thread_id;
+
+            echo ' <div class="result">
+                    <h3><a href="'. $url . '" class="text-dark">' . $title . ' </a></h3>
+                    <p>' . $desc . '
+                    </p>
+                  </div>';
+        }
+            if($noresults){
+                echo '<div class="jumbotron jumbotron-fluid"> 
+                <div class="container">
+                    <p class="display-4">No Results Found</p>
+                    <p class="lead">Suggestions:<?
+                    <li>Try more general keywords</li>
+                    <li>Try fewer keywords</li>
+                    </p>
+                </div>
+              </div>';
+            }
+    ?>
+
+        
+    </div>
 
     <?php include 'partials/_footer.php';?>
 
